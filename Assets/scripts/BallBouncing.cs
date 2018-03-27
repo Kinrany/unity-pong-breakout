@@ -7,7 +7,9 @@ public class BallBouncing : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D collision) {
 
 		var movement = GetComponent<BallMovement>();
-		var n = collision.contacts[0].normal;
+
+		var contact = collision.contacts[0];
+		var n = contact.normal;
 		var v = movement.Velocity;
 		movement.Velocity = Vector2.Reflect(v, n);
 
