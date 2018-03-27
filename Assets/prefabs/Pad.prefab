@@ -99,9 +99,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a7f11cb7ffd64479de441dcd2a9983, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 4
+  Speed: 5
+  MinY: -3
+  MaxY: 3
   Player: 0
-  AttractionStrength: 3
+  AttractionStrength: 5
   Ball: {fileID: 0}
 --- !u!212 &212030790924396636
 SpriteRenderer:

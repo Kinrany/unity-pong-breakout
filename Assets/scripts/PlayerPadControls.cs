@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerPadControls : MonoBehaviour {
 
 	public float Speed = 1;
+	public float MinY = float.NegativeInfinity;
+	public float MaxY = float.PositiveInfinity;
 
 	public PlayerId Player;
 
@@ -14,7 +16,11 @@ public class PlayerPadControls : MonoBehaviour {
 
 	void FixedUpdate() {
 
-		float movement = Speed * Time.fixedDeltaTime;
+		float dt = Time.fixedDeltaTime;
+		Transform t = transform;
+
+
+		// load input
 
 		float inputMoveUp = 0;
 		float inputAttract = 0;
@@ -32,19 +38,26 @@ public class PlayerPadControls : MonoBehaviour {
 				throw new InvalidOperationException("Player not specified");
 		}
 
-		if (inputMoveUp > 0) {
-			transform.position += movement * Vector3.up;
-		} else if (inputMoveUp < 0) {
-			transform.position += movement * Vector3.down;
-		}
 
-		Vector2 ballDirection = (transform.position - Ball.transform.position).normalized;
-		Vector2 attraction = AttractionStrength * ballDirection * Time.fixedDeltaTime;
-		if (inputAttract > 0) {
-			Ball.Velocity += attraction;
-		} else if (inputAttract < 0) {
-			Ball.Velocity += -attraction;
-		}
+		// move the pad
+
+		float movement = Speed * dt;
+
+		t.position += inputMoveUp * movement * Vector3.up;
+		t.position = new Vector2(t.position.x, Mathf.Clamp(t.position.y, MinY, MaxY));
+
+
+		// attract/repel the ball
+
+		Vector2 pos = t.position;
+		Vector2 ballPos = Ball.transform.position;
+
+		Vector2 ballDirection = (pos - ballPos).normalized;
+		//float ballDistance = (pos - ballPos).magnitude;
+
+		Vector2 attraction = AttractionStrength * ballDirection * dt;
+
+		Ball.Velocity += inputAttract * attraction;
 	}
 
 	public enum PlayerId {
