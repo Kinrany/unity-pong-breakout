@@ -2,6 +2,10 @@
 
 Pong + Breakout + дилемма заключенного
 
+## играть
+
+https://kinrany.github.io/unity-pong-breakout/
+
 ## идеи
 
 Asteroids, Space Invaders?
